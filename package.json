@@ -3,6 +3,20 @@
 	"displayName": "Static Site Hero",
 	"description": "Help with writing posts for static site generator",
 	"version": "0.0.1",
+	"publisher": "antra",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Antra/static-site-hero.git"
+	},
+	"bugs": {
+		"url": "https://github.com/Antra/static-site-hero/issues"
+	},
+	"homepage": "https://github.com/Antra/static-site-hero/blob/master/README.md",
+	"icon": "/images/none.jpg",
+	"galleryBanner": {
+		"color": "#96DFFF",
+		"theme": "dark"
+	},
 	"engines": {
 		"vscode": "^1.30.0"
 	},
