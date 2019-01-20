@@ -3,7 +3,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
-let insertText = (value) => {
+let insertText = (value: any) => {
 	let editor = vscode.window.activeTextEditor;
 
 	if (!editor) {
@@ -19,6 +19,14 @@ let insertText = (value) => {
 		editBuilder.replace(range, value);
 
 	});
+};
+
+let getImageTemplate = () => {
+	return vscode.workspace.getConfiguration("staticSiteHero")["imagePathTemplate"];
+};
+
+let getFilesTemplate = () => {
+	return vscode.workspace.getConfiguration("staticSiteHero")["filePathTemplate"];
 };
 
 // this method is called when your extension is activated
@@ -38,7 +46,14 @@ export function activate(context: vscode.ExtensionContext) {
 
 		vscode.window.showQuickPick(linkTypeList, { placeHolder: 'Link Type' })
 			.then(result => {
-				insertText(result);
+				//insertText(result);
+
+				if (result === 'File') {
+					insertText(getFilesTemplate());
+				} else if (result === 'Image') {
+					insertText(getImageTemplate());
+				}
+
 			});
 	});
 	context.subscriptions.push(fileLinkDisposable);
