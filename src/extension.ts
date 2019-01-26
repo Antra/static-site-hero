@@ -11,13 +11,11 @@ const figureTemplate = "<figure class =\"${figOptions.cssWidthClass}\">\n" +
 	"</figure>";
 
 let insertText = (value: any) => {
-	let editor = vscode.window.activeTextEditor;
-
-	if (!editor) {
+	if (!vscode.window.activeTextEditor) {
 		vscode.window.showErrorMessage("Can't insert text because no document is open.");
 		return;
 	}
-
+	let editor = vscode.window.activeTextEditor;
 	let selection = editor.selection;
 
 	let range = new vscode.Range(selection.start, selection.end);
@@ -109,27 +107,28 @@ export function activate(context: vscode.ExtensionContext) {
 
 		vscode.window.showInputBox({ prompt: "Image File Name" })
 			.then(value => {
-				figOptions.imageName = value;
+				if (value !== undefined) { figOptions.imageName = value; }
 			}).then(() => {
 				return vscode.window.showInputBox({ prompt: "Figure Caption" })
-					.then(result => {
-						figOptions.altText = result;
-						figOptions.figCaption = result;
+					.then((result) => {
+						if (result !== undefined) {
+							figOptions.altText = result;
+							figOptions.figCaption = result;
+						}
 					});
 			})
 			.then(() => {
 				return vscode.window.showQuickPick(cssWidthClass, { placeHolder: "Width Class" })
 					.then(result => {
-						figOptions.cssWidthClass = result;
+						if (result !== undefined) { figOptions.cssWidthClass = result; }
 					});
 			})
 			.then(() => {
 				return vscode.window.showQuickPick(cssAlignmentClass, { placeHolder: "Alignment Class" })
 					.then(result => {
-						figOptions.cssAlignmentClass = result;
+						if (result !== undefined) { figOptions.cssAlignmentClass = result; }
 					});
 			})
-
 			.then(() => {
 				insertText(fillFigureTemplate(figOptions));
 
